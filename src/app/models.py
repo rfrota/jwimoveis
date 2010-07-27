@@ -12,10 +12,13 @@ class Pessoa(models.Model):
     cpf = models.IntegerField("CPF",
                               max_length=11,
                               primary_key=True)
-    tel1 = models.IntegerField(null=True)
-    tel2 = models.IntegerField(null=True)
-    tel3 = models.IntegerField(null=True)
-def __unicode__(self):
+    tel1 = models.IntegerField(blank=True,
+                               null=True)
+    tel2 = models.IntegerField(blank=True,
+                               null=True)
+    tel3 = models.IntegerField(blank=True,
+                               null=True)
+    def __unicode__(self):
         return self.nome
 class Inquilino(Pessoa):
     pass
@@ -27,7 +30,8 @@ class Proprietario(Pessoa):
 class Imovel(models.Model):
     dono = models.ForeignKey(Proprietario)
     inquilino = models.ForeignKey(Inquilino,
-                                  blank=True)
+                                  blank=True,
+                                  null=True)
     ##casa/apartamento/escritorio/fazenda...
     tipo = models.CharField(max_length=50)
     estado = models.CharField(max_length=2)
@@ -48,10 +52,13 @@ class Imovel(models.Model):
     descricao = models.TextField("Descrição do Imóvel",
                                  blank=True)
     ##valores-base para venda/aluguel
-    valorAluguel = models.IntegerField(null=True)
-    valorVenda = models.IntegerField(null=True)
+    valorAluguel = models.IntegerField(blank=True,
+                                       null=True)
+    valorVenda = models.IntegerField(blank=True,
+                                     null=True)
+    imagem = models.ImageField(upload_to='images/')
     def __unicode__(self):
-        return '%s\n%s\n%s'(self.tipo,self.endereco,self.dono)
+        return u'%s\n%s\n%s'%(self.tipo,self.endereco,self.dono)
 
 
 
